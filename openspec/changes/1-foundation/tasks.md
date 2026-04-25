@@ -46,20 +46,48 @@
 - [x] R.10 **`.editorconfig`** — اضافه شد (همگام با Prettier)
 - [x] R.11 **design.md decision 23** — مستندسازی paradigm shift از PPR به Cache Components
 
-## 2. ساختار پوشه و قاعده مرز (Feature-Sliced)
+## 2. ساختار پوشه و قاعده مرز (Feature-Sliced) ✅
 
-- [ ] 2.1 ایجاد ساختار feature-sliced:
-  - `src/app/`
-  - `src/features/auth/{components,server,services,schemas,types.ts,index.ts}`
-  - `src/core/{clients,errors,logger,result,security}/`
-  - `src/overrides/`
-  - `src/components/{ui,layout}/`
-  - `src/lib/` (فقط helpers، بدون business logic)
-- [ ] 2.2 نوشتن ESLint rule سفارشی `singo/no-core-internal-leak` (سخت — error)
-- [ ] 2.3 نوشتن ESLint rule سفارشی `singo/overrides-stable-api` (warning)
-- [ ] 2.4 نوشتن ESLint rule سفارشی `singo/no-feature-internal-import` (سخت — error؛ import به feature فقط از `index.ts`)
-- [ ] 2.5 تست unit برای هر سه rule با Vitest
-- [ ] 2.6 README کوتاه در هر فولدر سطح بالا که محدوده و قواعد آن را توضیح می‌دهد
+- [x] 2.1 ساختار Feature-Sliced ایجاد شد:
+  - `src/app/`, `src/features/auth/{components,server,services,schemas,types.ts,index.ts}`
+  - `src/core/{clients/{sms,storage},errors,logger,result,security}/`
+  - `src/overrides/`, `src/components/{ui,layout,features}/`, `src/lib/`, `src/fonts/`
+  - `tools/eslint-plugin-singo/{rules,tests}/`
+- [x] 2.2 ESLint rule `singo/no-core-internal-leak` نوشته شد (`tools/eslint-plugin-singo/rules/no-core-internal-leak.mjs`، severity: `error`)
+- [x] 2.3 ESLint rule `singo/overrides-stable-api` نوشته شد (severity: `warn`؛ deep import به core را warning می‌دهد)
+- [x] 2.4 ESLint rule `singo/no-feature-internal-import` نوشته شد (severity: `error`؛ import به feature از خارج فقط از `index.ts` مجاز)
+- [x] 2.5 تست unit با Vitest + ESLint `RuleTester` — **۲۹ تست در ۳ فایل، همه سبز**
+- [x] 2.6 README در ۸ فولدر سطح بالا: `src/`, `src/{app,core,features,overrides,components,lib,fonts}/`, `tools/eslint-plugin-singo/`
+
+**تأیید عملکرد:**
+
+- `pnpm typecheck` → بدون خطا
+- `pnpm lint` → بدون خطا و warning
+- `pnpm test` → ۲۹/۲۹ سبز در ۳۲۳ms
+- `pnpm build` → موفق (Cache Components فعال)
+
+**ابزارهای اضافه‌شده:** Vitest 4.1.5 + scripts `test` و `test:watch` در package.json. Plugin محلی در `tools/eslint-plugin-singo/` که توسط `eslint.config.mjs` با `import` بارگذاری می‌شود.
+
+### اصلاحات remediation (پس از مرور کارشناسی بخش ۲)
+
+- [x] R.1 **Anchor شدن paths به `/src/`** — جلوگیری از false positive روی `node_modules/.../overrides/...`
+- [x] R.2 **`ImportExpression` به همه ruleها اضافه شد** — bypass عمدی با `import('@/overrides')` بسته شد
+- [x] R.3 **`no-core-internal-leak` گسترش یافت** — حالا هم `core → overrides` و هم `core → features` را block می‌کند (با messageId جدا و پیام فارسی متفاوت)
+- [x] R.4 **`featureOfFile` edge case** — اگر فایل مستقیماً در `src/features/` (مثل barrel root) باشد، به‌جای feature ساختگی، `null` برمی‌گرداند
+- [x] R.5 **`overrides-stable-api` ارتقا به `error`** — این یک مدل کسب‌وکار است، نه ترجیح استایل
+- [x] R.6 **plugin meta.name** اصلاح به `'singo'` (canonical، بدون پیشوند `eslint-plugin-`)
+- [x] R.7 **`docs.url`** به meta هر سه rule اضافه شد
+- [x] R.8 **تست‌ها از `process.cwd()` به `import.meta.url`** — مستقل از CWD اجرا
+- [x] R.9 **شکاف‌های تست پر شد:** dynamic imports، type-only imports، explicit `/index`، re-export، export \*، core→features
+- [x] R.10 **Integration test جدید** (`tests/integration.test.mjs`) با ESLint API — تأیید می‌کند ruleها در `eslint.config.mjs` واقعی repo درست ثبت شده‌اند و severity صحیح دارند
+- [x] R.11 **Decision 24 در design.md** — مستندسازی رسمی: scope core، type-only policy، dynamic import، severity، anchor، integration test
+- [x] R.12 **READMEها به‌روز** (`src/core/`, `tools/eslint-plugin-singo/`) — رفتار جدید مستند
+
+**نتیجه نهایی پس از remediation:**
+
+- **۵۶ تست در ۴ فایل** (3 unit + 1 integration)، همه سبز در ~۱.۷ ثانیه
+- pnpm typecheck/lint/build همه سبز
+- integration test تأیید شد ruleها در `pnpm lint` واقعی trigger می‌شوند با severity صحیح
 
 ## 3. `site.config.ts` و سیستم تم
 
