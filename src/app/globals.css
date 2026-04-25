@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+/* تم پایه؛ در task 3.4-3.6 با تزریق پویای brand color جایگزین می‌شود. */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  /* فونت Vazirmatn از layout.tsx به‌صورت --font-vazirmatn ست می‌شود؛
+     اینجا به‌عنوان font-sans به Tailwind expose می‌شود. */
+  --font-sans: var(--font-vazirmatn);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
