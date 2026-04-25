@@ -1,0 +1,10 @@
+node_modules
+.next
+.husky/_
+out
+build
+coverage
+pnpm-lock.yaml
+*.min.*
+public
+messages
