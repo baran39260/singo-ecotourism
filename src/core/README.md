@@ -15,12 +15,17 @@
 
 پوشه‌های آینده (پروپوزال‌های بعدی): `clients/payment/`, `clients/whatsapp/`, `compliance/`, `notifications/`, `booking/state-machine/`.
 
-## قواعد
+## قواعد (با ESLint اجباری — `singo/no-core-internal-leak`)
 
-- ❌ هیچ import از `@/overrides` (با ESLint `singo/no-core-internal-leak` اجباری)
-- ❌ هیچ import از `@/features/*` — core نباید به feature خاصی وابسته باشد
-- ✅ از `@/core/*` و `@/lib/*` می‌تواند import کند
-- ✅ از npm packageها می‌تواند import کند
+- ❌ هیچ import از `@/overrides/*` (value یا type یا dynamic — همه block)
+- ❌ هیچ import از `@/features/*` — core نباید به feature خاصی متعهد باشد
+- ✅ از `@/core/*` و `@/lib/*` آزاد
+- ✅ از `@/components/*` (در صورت نیاز) آزاد
+- ✅ از npm packages آزاد
+
+اگر core نیاز به business logic feature دارد، **الگوی Dependency Inversion** را
+اعمال کنید: یک interface در `core/clients/<service>/` تعریف کنید و feature
+آن را پیاده‌سازی کند (الگوی `SmsClient`/`StorageClient` را ببینید).
 
 ## افزودن چیز جدید
 

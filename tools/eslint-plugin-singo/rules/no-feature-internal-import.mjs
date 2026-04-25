@@ -16,7 +16,7 @@
 
 import path from 'node:path';
 
-const SRC_DIR = `${path.sep}src${path.sep}`;
+const SRC_FEATURES = path.join(path.sep, 'src', 'features') + path.sep;
 // matches @/features/<X>/<deeper>...   (که <deeper> چیزی غیر از 'index' است)
 const ALIAS_FEATURE_INTERNAL = /^@\/features\/([^/]+)\/(?!index(?:\.[a-z]+)?$)(.+)/;
 // matches @/features/<X>  یا  @/features/<X>/index
@@ -26,14 +26,22 @@ function normalize(p) {
   return p.split('/').join(path.sep);
 }
 
-/** اگر فایل داخل یک feature است، نام feature را برمی‌گرداند، وگرنه null. */
+/**
+ * اگر فایل داخل یک feature است، نام feature را برمی‌گرداند، وگرنه null.
+ *
+ * Edge case: اگر پس از `src/features/`، اولین segment یک فایل (مثلاً `index.ts`)
+ * باشد نه یک پوشه، فایل خارج از یک feature خاص است (مثل barrel root).
+ */
 function featureOfFile(filename) {
   const norm = normalize(filename);
-  const idx = norm.indexOf(`${SRC_DIR}features${path.sep}`);
+  const idx = norm.indexOf(SRC_FEATURES);
   if (idx === -1) return null;
-  const after = norm.slice(idx + SRC_DIR.length + 'features'.length + 1);
-  const featureName = after.split(path.sep)[0];
-  return featureName || null;
+  const after = norm.slice(idx + SRC_FEATURES.length);
+  const segments = after.split(path.sep);
+  if (segments.length < 2) return null; // فایل مستقیم در features/ root است
+  const featureName = segments[0];
+  if (!featureName || featureName.includes('.')) return null; // index.ts و غیره
+  return featureName;
 }
 
 /** اگر import به یک feature است، نام feature هدف و عمق را برمی‌گرداند. */
@@ -52,6 +60,7 @@ const rule = {
     docs: {
       description: 'به feature فقط از طریق index.ts آن import کنید، نه مسیر داخلی',
       recommended: true,
+      url: 'https://github.com/baran39260/singo-ecotourism/blob/main/tools/eslint-plugin-singo/rules/no-feature-internal-import.mjs',
     },
     schema: [],
     messages: {
@@ -64,21 +73,22 @@ const rule = {
     const ownFeature = featureOfFile(filename);
 
     const check = (node) => {
-      const source = node.source?.value;
-      if (typeof source !== 'string') return;
-      const target = parseFeatureImport(source);
+      const sourceValue = node.source?.value;
+      if (typeof sourceValue !== 'string') return;
+      const target = parseFeatureImport(sourceValue);
       if (!target || !target.internal) return;
       // import داخل همان feature آزاد است
       if (ownFeature && ownFeature === target.feature) return;
       context.report({
         node,
         messageId: 'deepImport',
-        data: { source, targetFeature: target.feature },
+        data: { source: sourceValue, targetFeature: target.feature },
       });
     };
 
     return {
       ImportDeclaration: check,
+      ImportExpression: check,
       ExportAllDeclaration: check,
       ExportNamedDeclaration: check,
     };

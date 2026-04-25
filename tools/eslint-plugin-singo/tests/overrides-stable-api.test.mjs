@@ -1,14 +1,10 @@
 import { RuleTester } from 'eslint';
-import path from 'node:path';
 import { describe, it } from 'vitest';
 import rule from '../rules/overrides-stable-api.mjs';
+import { inOverrides, inSrc } from './helpers.mjs';
 
 RuleTester.it = it;
 RuleTester.describe = describe;
-
-const REPO = process.cwd();
-const inOverrides = (...segs) => path.join(REPO, 'src', 'overrides', ...segs);
-const inOther = (...segs) => path.join(REPO, 'src', ...segs);
 
 const ruleTester = new RuleTester({
   languageOptions: { ecmaVersion: 'latest', sourceType: 'module' },
@@ -21,12 +17,12 @@ ruleTester.run('singo/overrides-stable-api', rule, {
       filename: inOverrides('components', 'Hero.tsx'),
       code: "import { logger } from '@/core';",
     },
-    // import از سطح ۱ زیر core (یک topdir)
+    // import از سطح ۱ زیر core
     {
       filename: inOverrides('components', 'Hero.tsx'),
       code: "import { logger } from '@/core/logger';",
     },
-    // import از کتابخانه npm
+    // import از npm
     {
       filename: inOverrides('components', 'Hero.tsx'),
       code: "import React from 'react';",
@@ -38,28 +34,48 @@ ruleTester.run('singo/overrides-stable-api', rule, {
     },
     // فایل خارج از overrides — قاعده اعمال نمی‌شود
     {
-      filename: inOther('lib', 'utils.ts'),
+      filename: inSrc('lib', 'utils.ts'),
       code: "import { x } from '@/core/logger/internal/buffer';",
     },
   ],
   invalid: [
-    // import به مسیر داخلی core — ۲ سطح زیر
+    // ─── deep import (alias، ۲ سطح زیر core) ──────────────────
     {
       filename: inOverrides('components', 'Hero.tsx'),
       code: "import { buf } from '@/core/logger/internal/buffer';",
       errors: [{ messageId: 'deepImport' }],
     },
-    // import به مسیر داخلی — ۳ سطح
+    // ─── deep import (۳ سطح) ─────────────────────────────────
     {
       filename: inOverrides('storage', 'custom.ts'),
       code: "import { x } from '@/core/clients/storage/internals';",
       errors: [{ messageId: 'deepImport' }],
     },
-    // export from با مسیر داخلی
+    // ─── deep import — even '/index' explicit مسدود است ──────
+    // (راه فرار آنتی‌پترن: اگر کسی '/index' بنویسد تا rule را دور بزند)
+    {
+      filename: inOverrides('barrel.ts'),
+      code: "import { x } from '@/core/logger/index';",
+      errors: [{ messageId: 'deepImport' }],
+    },
+    // ─── export from با مسیر داخلی ───────────────────────────
     {
       filename: inOverrides('barrel.ts'),
       code: "export { y } from '@/core/security/rate-limit/in-memory';",
       errors: [{ messageId: 'deepImport' }],
     },
+    // ─── export * ────────────────────────────────────────────
+    {
+      filename: inOverrides('barrel.ts'),
+      code: "export * from '@/core/logger/internal/setup';",
+      errors: [{ messageId: 'deepImport' }],
+    },
+    // ─── dynamic import ─────────────────────────────────────
+    {
+      filename: inOverrides('components', 'Hero.tsx'),
+      code: "const m = await import('@/core/logger/internal/buffer');",
+      errors: [{ messageId: 'deepImport' }],
+    },
+    // type-only imports در integration.test.mjs تست می‌شوند (نیاز به TS parser)
   ],
 });

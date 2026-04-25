@@ -1,31 +1,23 @@
 import { RuleTester } from 'eslint';
-import path from 'node:path';
 import { describe, it } from 'vitest';
 import rule from '../rules/no-core-internal-leak.mjs';
+import { inCore, inSrc } from './helpers.mjs';
 
-// RuleTester به یک test framework نیاز دارد. به Vitest وصل می‌کنیم.
 RuleTester.it = it;
 RuleTester.describe = describe;
 
-const REPO = process.cwd();
-const inCore = (...segs) => path.join(REPO, 'src', 'core', ...segs);
-const inOther = (...segs) => path.join(REPO, 'src', ...segs);
-
 const ruleTester = new RuleTester({
-  languageOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
+  languageOptions: { ecmaVersion: 'latest', sourceType: 'module' },
 });
 
 ruleTester.run('singo/no-core-internal-leak', rule, {
   valid: [
-    // import از core داخل core — مجاز
+    // import داخل core — مجاز
     {
       filename: inCore('logger', 'index.ts'),
       code: "import { x } from '@/core/result';",
     },
-    // import از lib داخل core — مجاز
+    // import از lib — مجاز
     {
       filename: inCore('logger', 'index.ts'),
       code: "import { db } from '@/lib/db';",
@@ -35,41 +27,80 @@ ruleTester.run('singo/no-core-internal-leak', rule, {
       filename: inCore('clients', 'sms', 'kavenegar.ts'),
       code: "import pino from 'pino';",
     },
-    // فایل خارج از core — قاعده اعمال نمی‌شود حتی اگر از overrides import کند
+    // فایل خارج از core — قاعده اعمال نمی‌شود
     {
-      filename: inOther('lib', 'utils.ts'),
+      filename: inSrc('lib', 'utils.ts'),
       code: "import { x } from '@/overrides/components/Hero';",
     },
-    // import relative به فایل دیگری در core
+    {
+      filename: inSrc('app', 'page.tsx'),
+      code: "import { x } from '@/features/auth';",
+    },
+    // import relative داخل core
     {
       filename: inCore('logger', 'index.ts'),
       code: "import { y } from './request-context';",
     },
   ],
   invalid: [
-    // alias import به overrides از داخل core
+    // ─── overrides leak (alias) ───────────────────────────────
     {
       filename: inCore('logger', 'index.ts'),
       code: "import { Hero } from '@/overrides/components/Hero';",
-      errors: [{ messageId: 'forbidden' }],
+      errors: [{ messageId: 'overrides' }],
     },
-    // alias import روت overrides
     {
       filename: inCore('result', 'index.ts'),
       code: "import x from '@/overrides';",
-      errors: [{ messageId: 'forbidden' }],
+      errors: [{ messageId: 'overrides' }],
     },
-    // relative import به overrides (../../overrides/...)
+    // ─── overrides leak (relative) ────────────────────────────
     {
       filename: inCore('logger', 'index.ts'),
       code: "import { Brand } from '../../overrides/brand/logo';",
-      errors: [{ messageId: 'forbidden' }],
+      errors: [{ messageId: 'overrides' }],
     },
-    // export from
+    // ─── overrides leak (export from) ─────────────────────────
     {
       filename: inCore('clients', 'storage', 'index.ts'),
       code: "export { x } from '@/overrides/storage';",
-      errors: [{ messageId: 'forbidden' }],
+      errors: [{ messageId: 'overrides' }],
+    },
+    // ─── overrides leak (export *) ────────────────────────────
+    {
+      filename: inCore('clients', 'storage', 'index.ts'),
+      code: "export * from '@/overrides';",
+      errors: [{ messageId: 'overrides' }],
+    },
+    // ─── overrides leak (dynamic import — bypass جلوگیری) ─────
+    {
+      filename: inCore('booking', 'index.ts'),
+      code: "const m = await import('@/overrides/tweak');",
+      errors: [{ messageId: 'overrides' }],
+    },
+    // type-only imports در integration.test.mjs تست می‌شوند (نیاز به TS parser)
+    // ─── features leak (alias) ────────────────────────────────
+    {
+      filename: inCore('logger', 'index.ts'),
+      code: "import { authService } from '@/features/auth';",
+      errors: [{ messageId: 'features' }],
+    },
+    {
+      filename: inCore('booking', 'state.ts'),
+      code: "import { repo } from '@/features/auth/server/repository';",
+      errors: [{ messageId: 'features' }],
+    },
+    // ─── features leak (dynamic import) ───────────────────────
+    {
+      filename: inCore('booking', 'state.ts'),
+      code: "const m = await import('@/features/auth');",
+      errors: [{ messageId: 'features' }],
+    },
+    // ─── features leak (relative) ─────────────────────────────
+    {
+      filename: inCore('booking', 'state.ts'),
+      code: "import { x } from '../../features/auth/index';",
+      errors: [{ messageId: 'features' }],
     },
   ],
 });

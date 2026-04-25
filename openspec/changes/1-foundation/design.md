@@ -896,6 +896,96 @@ const auth = new AuthService(userRepository, container().smsClient, container().
 
 ---
 
+## Decision 24: مرز معماری — رفتار قاعده‌های ESLint سفارشی
+
+### Context
+
+پس از پیاده‌سازی بخش ۲ و مرور کارشناسی، چند سؤال طراحی روی plugin سفارشی
+(`tools/eslint-plugin-singo/`) باز ماند که باید به‌صورت رسمی پاسخ داده شوند.
+
+### Decision
+
+#### الف) Scope مرز core
+
+`singo/no-core-internal-leak` (در ابتدا فقط `core → overrides`) به **`core → overrides` و
+`core → features`** هر دو گسترش یافت. دلیل:
+
+- core کد cross-cutting infrastructure است (logger, errors, clients, security)
+- وابستگی به overrides → آپدیت Premium می‌شکند
+- وابستگی به features → core متعهد به یک domain خاص می‌شود (آنتی‌پترن)
+- اگر core نیاز به business logic دارد، باید **interface در core** تعریف کند و
+  feature آن را پیاده‌سازی کند (الگوی Dependency Inversion)
+
+پیاده‌سازی: یک rule با دو `messageId` (`overrides`, `features`) و پیام فارسی متفاوت.
+
+#### ب) Type-only imports هم block می‌شوند
+
+این تصمیم **سختگیرانه**: حتی `import type { X } from '@/overrides/...'` block است،
+نه فقط value imports. دلیل:
+
+- type-only imports زمان اجرا حذف می‌شوند، **ولی coupling compile-time دارند**
+- اگر type در overrides تغییر کند، core ‌build فیل می‌شود → معماری شکست خورد
+- intent معماری «هیچ آگاهی از overrides در core» است، نه فقط «هیچ کد از overrides در core»
+- تشخیص type-only در runtime ESLint پیچیده است (نیاز به TS parser)؛ پس همه
+  `ImportDeclaration` و `ImportExpression` و `Export*Declaration` بدون استثنا چک می‌شوند
+
+اگر یک case واقعی پیدا شد که type-only ضروری بود (مثلاً Conditional Type)،
+exception در همان فایل با `// eslint-disable-next-line` قابل قبول است
+(در PR review توجیه شود).
+
+#### ج) Dynamic imports هم پوشش داده می‌شوند
+
+`import('@/overrides/...')` به‌عنوان bypass، یک شکاف امنیت معماری بود.
+حالا `ImportExpression` AST selector به همه ruleها اضافه شده.
+
+استثنا: `import(variable)` که string literal نیست، قابل تحلیل static نیست
+و اجباراً نادیده گرفته می‌شود (محدودیت ذاتی ESLint). اگر کسی این الگو
+را برای bypass استفاده کرد، code review باید بگیرد.
+
+#### د) Severity `overrides-stable-api` ارتقا یافت به `error`
+
+از `warn` به `error` ارتقا یافت. دلیل:
+
+- این مرز یک **مدل کسب‌وکار** است، نه ترجیح استایل
+- اگر مشتری Premium از deep import استفاده کند، نسخه بعدی سینگو
+  ممکن است سایتش را بشکند → از پوشش آپدیت خارج می‌شود
+- warning در CI ignore می‌شود؛ error فیل می‌کند → دیسیپلین واقعی
+
+#### ه) Anchor شدن paths به `/src/`
+
+تشخیص اولیه با `path.includes('/overrides/')` آسیب‌پذیر بود
+(false positive روی `node_modules/somepkg/overrides/...`). همه paths
+به `/src/overrides/`, `/src/features/`, `/src/core/` anchor شدند.
+
+#### و) Integration test با ESLint API
+
+علاوه بر unit test با `RuleTester`, یک integration test
+(`tests/integration.test.mjs`) ESLint API را برنامه‌ریزی صدا می‌زند تا
+تأیید کند ruleها در `eslint.config.mjs` واقعی repo درست ثبت شده‌اند
+و severity صحیح دارند. اگر فردا کسی plugin را در config اشتباه ثبت کند
+یا severity را غیرعمد تغییر دهد، این test fail می‌شود.
+
+### Trade-offs
+
+| تصمیم                    | مزیت                                      | هزینه                                                      |
+| ------------------------ | ----------------------------------------- | ---------------------------------------------------------- |
+| core → features هم block | معماری clean، Dependency Inversion اجباری | اگر کسی واقعاً نیاز داشته باشد، باید refactor با interface |
+| type-only block          | معماری sealed compile-time                | escape hatch با eslint-disable در موارد نادر               |
+| dynamic import block     | جلوگیری از bypass عمدی                    | محدودیت در dynamic plugin loading اگر در آینده نیاز شد     |
+| severity error           | CI واقعاً فیل می‌کند                      | لحظه‌ای ممکن است PR developer را بلاک کند                  |
+| anchor /src/             | false positive صفر                        | هیچ                                                        |
+| integration test         | regression detection                      | یک تست اضافه که باید نگه‌داری شود                          |
+
+### Migration
+
+پروپوزال‌های بعدی که در core کد می‌نویسند:
+
+- اگر نیاز به دسترسی به یک feature دارند → interface در core تعریف کنند
+- اگر نیاز به دسترسی به سیستم نظارت/SMS/Storage دارند → از `core/clients/` استفاده کنند
+- هیچ‌گاه `import` یا `import type` به `@/features/*` یا `@/overrides/*` ننویسند
+
+---
+
 ## Trade-offs خلاصه
 
 | تصمیم                       | مزیت                                      | هزینه                                             |

@@ -68,6 +68,27 @@
 
 **ابزارهای اضافه‌شده:** Vitest 4.1.5 + scripts `test` و `test:watch` در package.json. Plugin محلی در `tools/eslint-plugin-singo/` که توسط `eslint.config.mjs` با `import` بارگذاری می‌شود.
 
+### اصلاحات remediation (پس از مرور کارشناسی بخش ۲)
+
+- [x] R.1 **Anchor شدن paths به `/src/`** — جلوگیری از false positive روی `node_modules/.../overrides/...`
+- [x] R.2 **`ImportExpression` به همه ruleها اضافه شد** — bypass عمدی با `import('@/overrides')` بسته شد
+- [x] R.3 **`no-core-internal-leak` گسترش یافت** — حالا هم `core → overrides` و هم `core → features` را block می‌کند (با messageId جدا و پیام فارسی متفاوت)
+- [x] R.4 **`featureOfFile` edge case** — اگر فایل مستقیماً در `src/features/` (مثل barrel root) باشد، به‌جای feature ساختگی، `null` برمی‌گرداند
+- [x] R.5 **`overrides-stable-api` ارتقا به `error`** — این یک مدل کسب‌وکار است، نه ترجیح استایل
+- [x] R.6 **plugin meta.name** اصلاح به `'singo'` (canonical، بدون پیشوند `eslint-plugin-`)
+- [x] R.7 **`docs.url`** به meta هر سه rule اضافه شد
+- [x] R.8 **تست‌ها از `process.cwd()` به `import.meta.url`** — مستقل از CWD اجرا
+- [x] R.9 **شکاف‌های تست پر شد:** dynamic imports، type-only imports، explicit `/index`، re-export، export \*، core→features
+- [x] R.10 **Integration test جدید** (`tests/integration.test.mjs`) با ESLint API — تأیید می‌کند ruleها در `eslint.config.mjs` واقعی repo درست ثبت شده‌اند و severity صحیح دارند
+- [x] R.11 **Decision 24 در design.md** — مستندسازی رسمی: scope core، type-only policy، dynamic import، severity، anchor، integration test
+- [x] R.12 **READMEها به‌روز** (`src/core/`, `tools/eslint-plugin-singo/`) — رفتار جدید مستند
+
+**نتیجه نهایی پس از remediation:**
+
+- **۵۶ تست در ۴ فایل** (3 unit + 1 integration)، همه سبز در ~۱.۷ ثانیه
+- pnpm typecheck/lint/build همه سبز
+- integration test تأیید شد ruleها در `pnpm lint` واقعی trigger می‌شوند با severity صحیح
+
 ## 3. `site.config.ts` و سیستم تم
 
 - [ ] 3.1 تعریف schema Zod در `src/lib/config-schema.ts` (فیلدهای این فاز)

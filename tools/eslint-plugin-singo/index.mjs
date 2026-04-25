@@ -14,7 +14,8 @@ import noFeatureInternalImport from './rules/no-feature-internal-import.mjs';
 
 const plugin = {
   meta: {
-    name: 'eslint-plugin-singo',
+    // canonical: نام بدون پیشوند `eslint-plugin-` (طبق ESLint convention)
+    name: 'singo',
     version: '0.1.0',
   },
   rules: {
