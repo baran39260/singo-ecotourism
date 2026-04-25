@@ -46,20 +46,27 @@
 - [x] R.10 **`.editorconfig`** — اضافه شد (همگام با Prettier)
 - [x] R.11 **design.md decision 23** — مستندسازی paradigm shift از PPR به Cache Components
 
-## 2. ساختار پوشه و قاعده مرز (Feature-Sliced)
+## 2. ساختار پوشه و قاعده مرز (Feature-Sliced) ✅
 
-- [ ] 2.1 ایجاد ساختار feature-sliced:
-  - `src/app/`
-  - `src/features/auth/{components,server,services,schemas,types.ts,index.ts}`
-  - `src/core/{clients,errors,logger,result,security}/`
-  - `src/overrides/`
-  - `src/components/{ui,layout}/`
-  - `src/lib/` (فقط helpers، بدون business logic)
-- [ ] 2.2 نوشتن ESLint rule سفارشی `singo/no-core-internal-leak` (سخت — error)
-- [ ] 2.3 نوشتن ESLint rule سفارشی `singo/overrides-stable-api` (warning)
-- [ ] 2.4 نوشتن ESLint rule سفارشی `singo/no-feature-internal-import` (سخت — error؛ import به feature فقط از `index.ts`)
-- [ ] 2.5 تست unit برای هر سه rule با Vitest
-- [ ] 2.6 README کوتاه در هر فولدر سطح بالا که محدوده و قواعد آن را توضیح می‌دهد
+- [x] 2.1 ساختار Feature-Sliced ایجاد شد:
+  - `src/app/`, `src/features/auth/{components,server,services,schemas,types.ts,index.ts}`
+  - `src/core/{clients/{sms,storage},errors,logger,result,security}/`
+  - `src/overrides/`, `src/components/{ui,layout,features}/`, `src/lib/`, `src/fonts/`
+  - `tools/eslint-plugin-singo/{rules,tests}/`
+- [x] 2.2 ESLint rule `singo/no-core-internal-leak` نوشته شد (`tools/eslint-plugin-singo/rules/no-core-internal-leak.mjs`، severity: `error`)
+- [x] 2.3 ESLint rule `singo/overrides-stable-api` نوشته شد (severity: `warn`؛ deep import به core را warning می‌دهد)
+- [x] 2.4 ESLint rule `singo/no-feature-internal-import` نوشته شد (severity: `error`؛ import به feature از خارج فقط از `index.ts` مجاز)
+- [x] 2.5 تست unit با Vitest + ESLint `RuleTester` — **۲۹ تست در ۳ فایل، همه سبز**
+- [x] 2.6 README در ۸ فولدر سطح بالا: `src/`, `src/{app,core,features,overrides,components,lib,fonts}/`, `tools/eslint-plugin-singo/`
+
+**تأیید عملکرد:**
+
+- `pnpm typecheck` → بدون خطا
+- `pnpm lint` → بدون خطا و warning
+- `pnpm test` → ۲۹/۲۹ سبز در ۳۲۳ms
+- `pnpm build` → موفق (Cache Components فعال)
+
+**ابزارهای اضافه‌شده:** Vitest 4.1.5 + scripts `test` و `test:watch` در package.json. Plugin محلی در `tools/eslint-plugin-singo/` که توسط `eslint.config.mjs` با `import` بارگذاری می‌شود.
 
 ## 3. `site.config.ts` و سیستم تم
 
