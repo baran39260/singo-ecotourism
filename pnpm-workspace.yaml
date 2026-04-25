@@ -1,0 +1,7 @@
+# این فایل توسط pnpm 10 برای silent کردن «approve build scripts» warning ساخته شد.
+# **توجه:** این پروژه monorepo نیست (طبق project.md بخش ۳.۲). تنها هدف این فایل
+# اعلام built dependencies ای است که اجازه اجرای post-install script ندارند.
+# اگر در آینده به monorepo مهاجرت کردیم (پس از پروپوزال ۹)، این فایل گسترش می‌یابد.
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver
