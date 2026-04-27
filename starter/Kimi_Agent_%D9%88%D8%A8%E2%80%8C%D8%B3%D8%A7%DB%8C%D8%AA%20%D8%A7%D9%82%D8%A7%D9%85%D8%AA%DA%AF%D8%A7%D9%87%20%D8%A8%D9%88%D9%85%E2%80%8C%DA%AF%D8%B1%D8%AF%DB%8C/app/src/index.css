@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 36 47% 96%;
+    --foreground: 60 3% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 60 3% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 60 3% 16%;
+    --primary: 33 37% 63%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 16 43% 56%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 36 35% 88%;
+    --muted-foreground: 60 2% 53%;
+    --accent: 60 12% 42%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 36 35% 88%;
+    --input: 36 35% 88%;
+    --ring: 33 37% 63%;
+    --radius: 1rem;
+
+    /* Custom colors */
+    --warm-cream: #FBF7F1;
+    --deep-sand: #C9A87C;
+    --terracotta: #C17A5F;
+    --muted-olive: #7A7B5C;
+    --charcoal: #2A2A28;
+    --warm-white: #FFFFFF;
+    --warm-gray: #8A8A86;
+    --light-sand: #F0E6D3;
+    --deep-charcoal: #1E1E1C;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background-color: var(--warm-cream);
+    color: var(--charcoal);
+    direction: rtl;
+    text-align: right;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
