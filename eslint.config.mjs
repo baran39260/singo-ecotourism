@@ -30,6 +30,8 @@ const eslintConfig = defineConfig([
     'next-env.d.ts',
     // ابزارهای داخلی — تست plugin خودش با RuleTester بررسی می‌شود
     'tools/eslint-plugin-singo/tests/**',
+    // mockup‌های طراحی — کد محصول نیستند، فقط مرجع UI
+    'design/**',
   ]),
 ]);
 

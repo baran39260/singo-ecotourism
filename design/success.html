@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>رزرو شما تأیید شد — سنگ سیاه</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles-pages.css"/>
+  <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#0E7C86"/></svg></template>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="icons.jsx"></script>
+  <script type="text/babel" src="sections.jsx"></script>
+  <script type="text/babel">
+    function SuccessPage() {
+      return (
+        <>
+          <Header tweaks={{}}/>
+          <div className="confirm-page container">
+            <div className="confirm-card">
+              <div className="confirm-icon" style={{position: "relative"}}>
+                <IconCheck size={48} strokeWidth={2.5}/>
+                <div style={{position: "absolute", top: -8, right: -8, transform: "rotate(15deg)"}}>
+                  <IconCrabMascot size={36}/>
+                </div>
+              </div>
+              <h1 className="t-h1">رزرو شما با موفقیت ثبت شد 🎉</h1>
+              <p className="text-muted mt-2">میزبانت در واتساپ خبردار شد. تأییدیه نهایی به ایمیلت ارسال می‌شود.</p>
+
+              <div className="confirm-code" dir="ltr">
+                SNG-1405-0421-X3K
+                <span className="copy">کپی</span>
+              </div>
+
+              <div style={{textAlign: "right", padding: "24px", background: "var(--brand-sand)", borderRadius: 16, marginTop: 24}}>
+                <div style={{display: "flex", gap: 12, marginBottom: 16, paddingBottom: 16, borderBottom: "1px solid var(--neutral-200)"}}>
+                  <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=160&q=80&auto=format&fit=crop" style={{width: 64, height: 64, borderRadius: 12, objectFit: "cover"}} alt=""/>
+                  <div>
+                    <div style={{fontWeight: 600}}>سوئیت سنگ</div>
+                    <div className="t-caption" style={{margin: 0}}>اقامتگاه سنگ سیاه · قشم</div>
+                  </div>
+                </div>
+                <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, fontSize: 13}}>
+                  <div><div className="t-caption" style={{margin: 0}}>ورود</div><div style={{fontWeight: 600, marginTop: 2}}>۲۵ اردیبهشت ۱۴۰۵</div></div>
+                  <div><div className="t-caption" style={{margin: 0}}>خروج</div><div style={{fontWeight: 600, marginTop: 2}}>۲۸ اردیبهشت ۱۴۰۵</div></div>
+                  <div><div className="t-caption" style={{margin: 0}}>میهمانان</div><div style={{fontWeight: 600, marginTop: 2}}>۲ بزرگسال</div></div>
+                  <div><div className="t-caption" style={{margin: 0}}>مبلغ پرداختی</div><div style={{fontWeight: 700, marginTop: 2, color: "var(--brand-primary)"}}>۹٫۰۵۶٫۰۰۰ تومان</div></div>
+                </div>
+              </div>
+
+              <div style={{marginTop: 24, padding: 14, background: "var(--brand-primary-soft)", borderRadius: 12, fontSize: 13, color: "var(--brand-primary)", textAlign: "right"}}>
+                📧 فاکتور رسمی الکترونیکی (سامانه مؤدیان) برای ایمیل شما ارسال خواهد شد.
+              </div>
+
+              <div className="confirm-actions">
+                <a href="dashboard.html" className="btn btn-primary"><IconArrowLeft size={16}/> داشبورد من</a>
+                <button className="btn btn-secondary"><IconCalendar size={16}/> ذخیره به تقویم</button>
+                <button className="btn btn-secondary" style={{borderColor: "#22C55E", color: "#15803D"}}><IconWhatsapp size={16}/> اشتراک با خانواده</button>
+              </div>
+            </div>
+          </div>
+          <Footer/>
+        </>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById("root")).render(<SuccessPage/>);
+  </script>
+</body>
+</html>
