@@ -1,0 +1,482 @@
+/* ============================================
+   Singo Signature Styles
+   Eco badges, empty states, 404, loaders, toasts, onboarding, dark mode
+   ============================================ */
+
+/* ============ ECO BADGE ============ */
+.eco-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-weight: 600;
+  position: relative;
+  cursor: help;
+  transition: transform .15s ease;
+}
+.eco-badge:hover { transform: translateY(-1px); }
+.eco-badge-compact {
+  padding: 3px 8px 3px 6px;
+  font-size: 11px;
+  line-height: 1;
+}
+.eco-badge-compact .eco-score {
+  font-weight: 800;
+  font-size: 10px;
+  margin-inline-start: 2px;
+  padding-inline-start: 4px;
+  border-inline-start: 1px solid currentColor;
+  opacity: 0.8;
+}
+.eco-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand-ink);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 8px 20px -4px rgba(0,0,0,0.25);
+  pointer-events: none;
+  text-align: start;
+}
+.eco-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--brand-ink);
+}
+.eco-tooltip strong {
+  display: block;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+.eco-tooltip ul {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  white-space: nowrap;
+}
+.eco-tooltip ul li {
+  font-size: 10px;
+  opacity: 0.85;
+  padding: 1px 0;
+}
+.eco-tooltip ul li::before {
+  content: "•";
+  margin-inline-end: 4px;
+  opacity: 0.6;
+}
+.eco-badge-full {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  width: 100%;
+}
+.eco-badge-full > svg { flex: 0 0 auto; }
+.eco-badge-full > div { flex: 1; }
+.eco-score-pill {
+  font-weight: 800;
+  font-size: 13px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 999px;
+}
+
+/* ============ EMPTY STATE ============ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 24px;
+  gap: 4px;
+}
+.empty-state h3 { color: var(--brand-ink); }
+
+/* ============ 404 ============ */
+.notfound-404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px;
+  gap: 8px;
+  position: relative;
+  min-height: 70vh;
+  justify-content: center;
+}
+.nf-crab {
+  margin-bottom: -20px;
+}
+.nf-num {
+  font-size: 88px;
+  font-weight: 800;
+  color: var(--brand-primary);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin: 8px 0 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============ LOADER ============ */
+.crab-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 24px;
+}
+.crab-loader-anim {
+  animation: crabBob 1.6s ease-in-out infinite;
+}
+@keyframes crabBob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* ============ TOAST ============ */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  z-index: 9999;
+  pointer-events: none;
+  width: min(420px, calc(100vw - 32px));
+}
+.toast {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px -8px rgba(0,0,0,0.18);
+  border: 1px solid var(--neutral-200);
+  pointer-events: auto;
+  align-items: center;
+  animation: toastSlide 0.3s ease-out;
+}
+@keyframes toastSlide {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.toast-crab { flex: 0 0 auto; }
+.toast-content { flex: 1; min-width: 0; }
+.toast-title { font-weight: 700; font-size: 14px; color: var(--brand-ink); }
+.toast-msg { font-size: 12px; color: var(--neutral-500); margin-top: 2px; }
+.toast-success { border-left: 3px solid #16a34a; }
+.toast-error { border-left: 3px solid #dc2626; }
+.toast-info { border-left: 3px solid var(--brand-primary); }
+
+/* ============ ONBOARDING TOOLTIP ============ */
+.onb-tooltip {
+  position: absolute;
+  background: white;
+  border: 1px solid var(--neutral-200);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  box-shadow: 0 16px 40px -12px rgba(0,0,0,0.2);
+  z-index: 200;
+  width: 320px;
+}
+.onb-content { flex: 1; }
+.onb-title { font-weight: 700; font-size: 14px; color: var(--brand-ink); }
+.onb-msg { font-size: 12px; color: var(--neutral-500); margin: 4px 0 10px; line-height: 1.5; }
+.onb-dismiss {
+  background: var(--brand-primary);
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.onb-dismiss:hover { background: var(--brand-primary-700, #095e64); }
+.onb-bottom::before {
+  content: "";
+  position: absolute;
+  top: -7px; left: 32px;
+  width: 14px; height: 14px;
+  background: white;
+  transform: rotate(45deg);
+  border-top: 1px solid var(--neutral-200);
+  border-left: 1px solid var(--neutral-200);
+}
+
+/* ============ FOOTER SIGNATURE ============ */
+.footer-signature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 24px;
+  color: rgba(255,255,255,0.7);
+}
+.footer-sig-text { font-size: 12px; line-height: 1.4; }
+.footer-sig-line strong { color: white; font-weight: 700; }
+.footer-sig-sub { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+
+/* ============================================
+   REFINED DARK MODE — atmospheric "night by the sea"
+   Deep navy + warm accent layers + atmospheric details
+   ============================================ */
+
+body.dark {
+  /* layered surfaces — darkest deep, with warmer mid-layers */
+  --surface-deep: #0a0e18;       /* page bg */
+  --surface: #131826;            /* cards */
+  --surface-2: #1c2236;          /* elevated */
+  --surface-3: #252b40;          /* inputs */
+  --brand-ink: #f0f2f8;
+  --neutral-700: #c0c5d4;
+  --neutral-500: #8b93a8;
+  --neutral-200: rgba(255,255,255,0.08);
+  --neutral-100: rgba(255,255,255,0.04);
+
+  /* warm primary glow — teal stays cool, but with more luminance */
+  --brand-primary: #2dd4bf;
+  --brand-primary-700: #14b8a6;
+  --brand-primary-soft: rgba(45,212,191,0.14);
+
+  /* warm secondary — brighter for contrast */
+  --secondary: #fb923c;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+
+  background: var(--surface-deep);
+  color: var(--brand-ink);
+}
+
+body.dark.dark-atmospheric::before {
+  /* subtle starfield */
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 28% 64%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1.5px 1.5px at 45% 82%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 62% 12%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 78% 56%, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1.5px 1.5px at 88% 28%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1px 1px at 8% 88%, rgba(255,255,255,0.3), transparent);
+  background-size: 100% 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+body.dark > * { position: relative; z-index: 1; }
+
+/* Surfaces */
+body.dark .site-header { background: rgba(13,18,30,0.85); border-bottom-color: rgba(255,255,255,0.06); }
+body.dark .site-header.scrolled { background: rgba(19,24,38,0.95); }
+body.dark .pillar,
+body.dark .room-card,
+body.dark .testimonial,
+body.dark .addon,
+body.dark .blog-img,
+body.dark .aggregate-score,
+body.dark .attr-card,
+body.dark .booking-widget {
+  background: var(--surface);
+  border-color: var(--neutral-200);
+  box-shadow: 0 4px 16px -4px rgba(0,0,0,0.4);
+}
+body.dark .booking-widget { background: rgba(19,24,38,0.96); }
+
+/* Inputs */
+body.dark .bw-field { border-color: var(--neutral-200); }
+body.dark .input,
+body.dark .select,
+body.dark .textarea {
+  background: var(--surface-2);
+  border-color: var(--neutral-200);
+  color: var(--brand-ink);
+}
+body.dark .input::placeholder { color: var(--neutral-500); }
+
+/* Hero overlay — slightly stronger */
+body.dark .hero-overlay {
+  background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(10,14,24,0.5) 50%, rgba(10,14,24,0.85) 100%);
+}
+
+/* Hero image — slightly dimmed for night mood */
+body.dark .hero-bg img,
+body.dark .hero-split-img img,
+body.dark .room-img img,
+body.dark .attr-card img,
+body.dark .blog-img img,
+body.dark .skel-img-wrap img {
+  filter: brightness(0.85) saturate(1.1);
+}
+
+/* Buttons */
+body.dark .btn-primary {
+  background: var(--brand-primary);
+  color: var(--surface-deep);
+}
+body.dark .btn-primary:hover { background: var(--brand-primary-700); }
+body.dark .btn-secondary {
+  background: var(--surface-2);
+  color: var(--brand-ink);
+  border-color: var(--neutral-200);
+}
+body.dark .btn-secondary:hover { background: var(--surface-3); }
+
+/* Pills / badges */
+body.dark .badge,
+body.dark .hero-meta-pill,
+body.dark .room-meta,
+body.dark .filter-chip {
+  background: rgba(255,255,255,0.06);
+  color: var(--brand-ink);
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* Section accent strips */
+body.dark .section-accent { background: rgba(45,212,191,0.06); border-color: rgba(45,212,191,0.18); }
+
+/* Footer */
+body.dark .footer { background: linear-gradient(180deg, var(--surface) 0%, var(--surface-deep) 100%); }
+body.dark .footer-col h4 { color: white; }
+body.dark .footer-col a { color: rgba(255,255,255,0.7); }
+body.dark .footer-col a:hover { color: var(--brand-primary); }
+
+/* Eco badge in dark */
+body.dark .eco-badge-compact {
+  background: rgba(74,222,128,0.12) !important;
+  border-color: rgba(74,222,128,0.4) !important;
+  color: #86efac !important;
+}
+body.dark .eco-tooltip {
+  background: var(--surface-2);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+body.dark .eco-tooltip::after { border-top-color: var(--surface-2); }
+
+/* Toast in dark */
+body.dark .toast {
+  background: var(--surface-2);
+  border-color: var(--neutral-200);
+}
+body.dark .toast-title { color: var(--brand-ink); }
+body.dark .toast-msg { color: var(--neutral-500); }
+
+/* Onboarding tooltip in dark */
+body.dark .onb-tooltip {
+  background: var(--surface-2);
+  border-color: var(--neutral-200);
+}
+body.dark .onb-bottom::before {
+  background: var(--surface-2);
+  border-color: var(--neutral-200);
+}
+body.dark .onb-title { color: var(--brand-ink); }
+body.dark .onb-msg { color: var(--neutral-500); }
+
+/* Bottom sheet in dark */
+body.dark .bottom-sheet { background: var(--surface); }
+body.dark .bs-header { border-bottom-color: var(--neutral-200); }
+
+/* MobileStickyCta in dark */
+body.dark .mobile-sticky-cta {
+  background: rgba(19,24,38,0.98);
+  border-top-color: var(--neutral-200);
+}
+
+/* Footer — keep dark in dark mode (it was already dark in light mode) */
+body.dark .site-footer {
+  background: #060912;
+  color: rgba(255,255,255,0.75);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+body.dark .site-footer .footer-col h5,
+body.dark .site-footer .brand-name {
+  color: white;
+}
+body.dark .site-footer .footer-col a,
+body.dark .site-footer .footer-col li {
+  color: rgba(255,255,255,0.7);
+}
+body.dark .site-footer .footer-col a:hover { color: var(--brand-primary); }
+body.dark .site-footer .footer-bottom {
+  border-top-color: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.55);
+}
+body.dark .site-footer .trust-badge {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+}
+body.dark .site-footer .footer-signature {
+  border-top-color: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+}
+body.dark .site-footer .footer-signature .footer-sig-line strong { color: white; }
+
+/* Lang toggle — fix invisibility on dark surfaces */
+body.dark .lang-toggle {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+body.dark .lang-toggle span { color: rgba(255,255,255,0.6); }
+body.dark .lang-toggle .active {
+  background: rgba(255,255,255,0.95);
+  color: #0a0e18;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* Nav links in dark */
+body.dark .nav-link { color: rgba(255,255,255,0.85); }
+body.dark .nav-link:hover { background: rgba(255,255,255,0.06); color: white; }
+body.dark .brand-name { color: white; }
+body.dark .brand-name small { color: rgba(255,255,255,0.6); }
+
+/* CTA band & similar dark sections */
+body.dark .cta-band {
+  background: linear-gradient(135deg, var(--surface-2) 0%, var(--surface) 100%);
+  border: 1px solid var(--neutral-200);
+}
+
+/* Newsletter input in footer */
+body.dark .footer-newsletter input,
+body.dark .site-footer input {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+  color: white;
+}
+body.dark .footer-newsletter input::placeholder,
+body.dark .site-footer input::placeholder { color: rgba(255,255,255,0.4); }
+
+/* Generic: any "white-on-dark" element from light theme that broke */
+body.dark .badge-eco { background: rgba(74,222,128,0.15); color: #86efac; border-color: rgba(74,222,128,0.4); }
+body.dark .testimonial-quote { color: var(--brand-ink); }
+body.dark .text-muted { color: var(--neutral-500); }
+body.dark .lead { color: var(--neutral-500); }
+body.dark hr { border-color: var(--neutral-200); }
+
+/* Scrollbar */
+body.dark ::-webkit-scrollbar-track { background: var(--surface-deep); }
+body.dark ::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 4px; }
+body.dark ::-webkit-scrollbar-thumb:hover { background: var(--neutral-500); }

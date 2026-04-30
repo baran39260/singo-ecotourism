@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>اقامتگاه ساحلی سنگ سیاه — Sang-e Siah Ecolodge · Qeshm</title>
+  <meta name="description" content="اقامتگاه بومی قشم — جنگل حرا، دره ستارگان، رزرو فوری بدون واسطه"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="styles.css?v=3"/>
+  <link rel="stylesheet" href="signature.css?v=2"/>
+
+  <!-- External image dependencies (lifted from JSX string literals) -->
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1920&q=80&auto=format&fit=crop" data-resource-id="hero"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=900&q=80&auto=format&fit=crop" data-resource-id="room1"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=900&q=80&auto=format&fit=crop" data-resource-id="room2"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=80&auto=format&fit=crop" data-resource-id="room3"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=900&q=80&auto=format&fit=crop" data-resource-id="attr1"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=700&q=80&auto=format&fit=crop" data-resource-id="attr2"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1502209524164-acea936639a2?w=700&q=80&auto=format&fit=crop" data-resource-id="attr3"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=80&auto=format&fit=crop" data-resource-id="attr4"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=700&q=80&auto=format&fit=crop" data-resource-id="addon1"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80&auto=format&fit=crop" data-resource-id="addon2"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=700&q=80&auto=format&fit=crop" data-resource-id="addon3"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=700&q=80&auto=format&fit=crop" data-resource-id="addon4"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=80&auto=format&fit=crop" data-resource-id="story"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=900&q=80&auto=format&fit=crop" data-resource-id="blog1"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1559847844-5315695dadae?w=900&q=80&auto=format&fit=crop" data-resource-id="blog2"/>
+  <meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=900&q=80&auto=format&fit=crop" data-resource-id="blog3"/>
+
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+      <rect width="200" height="200" fill="#0E7C86"/>
+      <g transform="translate(100,110)" fill="#F5EFE3">
+        <ellipse cx="0" cy="0" rx="40" ry="28"/>
+        <path d="M-58 -8 Q-70 -22 -58 -32 Q-46 -22 -50 -10 Z M58 -8 Q70 -22 58 -32 Q46 -22 50 -10 Z"/>
+        <path d="M-30 18 L-42 32 M-30 22 L-42 38 M30 18 L42 32 M30 22 L42 38" stroke="#F5EFE3" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <circle cx="-14" cy="-6" r="6" fill="#0E7C86"/>
+        <circle cx="14" cy="-6" r="6" fill="#0E7C86"/>
+      </g>
+      <text x="100" y="180" text-anchor="middle" fill="#F5EFE3" font-family="sans-serif" font-size="14" font-weight="600">سنگ سیاه</text>
+    </svg>
+  </template>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="icons.jsx"></script>
+  <script type="text/babel" src="crab.jsx"></script>
+  <script type="text/babel" src="polish-bundle.jsx"></script>
+  <script type="text/babel" src="signature.jsx"></script>
+  <script type="text/babel" src="sections-bundle.jsx"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+
+  <script type="text/babel">
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "primaryColor": "#0E7C86",
+      "secondaryColor": "#C2410C",
+      "heroTitle": "شب‌هایت را به ستاره‌های قشم بسپار",
+      "heroSubtitle": "اقامتگاهی از جنس سنگ، حرا و آرامش — رزرو همین لحظه، تأیید فوری.",
+      "heroHeight": 80,
+      "heroLayout": "overlay",
+      "darkMode": false,
+      "fontScale": 1.05,
+      "crabSize": 1.1,
+      "ecoIntensity": 0,
+      "darkAtmosphere": true
+    }/*EDITMODE-END*/;
+
+    function App() {
+      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+      return (
+        <ToastProvider>
+          <AppInner tweaks={tweaks} setTweak={setTweak}/>
+        </ToastProvider>
+      );
+    }
+
+    function AppInner({ tweaks, setTweak }) {
+      const [dateSheetOpen, setDateSheetOpen] = React.useState(false);
+      const [dates, setDates] = React.useState({ start: 25, end: 28 });
+      const [guests, setGuests] = React.useState({ adults: 2, children: 0 });
+      const toast = useToast();
+
+      // Apply tweaks to root
+      React.useEffect(() => {
+        const r = document.documentElement;
+        r.style.setProperty("--brand-primary", tweaks.primaryColor);
+        r.style.setProperty("--brand-secondary", tweaks.secondaryColor);
+        r.style.setProperty("--crab-size", tweaks.crabSize);
+        r.style.setProperty("--eco-intensity", tweaks.ecoIntensity);
+        window.dispatchEvent(new CustomEvent("eco-intensity-changed"));
+        document.body.classList.toggle("dark", tweaks.darkMode);
+        document.body.classList.toggle("dark-atmospheric", tweaks.darkMode && tweaks.darkAtmosphere);
+        document.body.style.fontSize = (16 * tweaks.fontScale) + "px";
+      }, [tweaks]);
+
+      const HeroComponent = tweaks.heroLayout === "split" ? HeroSplit : Hero;
+
+      return (
+        <>
+          <Header tweaks={tweaks} transparentOnHero={tweaks.heroLayout === "overlay"}/>
+          <HeroComponent tweaks={tweaks} onOpenDateSheet={() => setDateSheetOpen(true)}/>
+          <Pillars/>
+          <Rooms/>
+          <TideWidget/>
+          <Attractions/>
+          <Addons/>
+          <Story/>
+          <Testimonials/>
+          <Blog/>
+          <CTABand/>
+          <Footer/>
+
+          <MobileStickyCta onBookClick={() => setDateSheetOpen(true)}/>
+
+          <BottomSheet
+            open={dateSheetOpen}
+            onClose={() => setDateSheetOpen(false)}
+            title="انتخاب تاریخ و میهمانان"
+            footer={
+              <>
+                <button className="btn btn-ghost" onClick={() => { setDates({start:null, end:null}); }}>پاک کردن</button>
+                <a className="btn btn-primary" href="rooms.html" onClick={() => { setDateSheetOpen(false); toast({type: "success", title: "جستجو انجام شد!", message: "اتاق‌های در دسترس را ببین"}); }}>جستجوی اتاق →</a>
+              </>
+            }
+          >
+            <MiniJalaliPicker start={dates.start} end={dates.end} onChange={setDates}/>
+            <div style={{marginTop: 24, paddingTop: 8, borderTop: "1px solid var(--neutral-200)"}}>
+              <h4 style={{fontSize: 14, fontWeight: 700, marginBottom: 4}}>میهمانان</h4>
+              <div className="bs-counter-row">
+                <div className="label">
+                  <b>بزرگسال</b>
+                  <small>۱۳ سال به بالا</small>
+                </div>
+                <div className="bs-counter">
+                  <button onClick={() => setGuests(g => ({...g, adults: Math.max(1, g.adults - 1)}))} disabled={guests.adults <= 1}>−</button>
+                  <span className="v">{fa(guests.adults)}</span>
+                  <button onClick={() => setGuests(g => ({...g, adults: g.adults + 1}))}>+</button>
+                </div>
+              </div>
+              <div className="bs-counter-row">
+                <div className="label">
+                  <b>کودک</b>
+                  <small>۲ تا ۱۲ سال</small>
+                </div>
+                <div className="bs-counter">
+                  <button onClick={() => setGuests(g => ({...g, children: Math.max(0, g.children - 1)}))} disabled={guests.children <= 0}>−</button>
+                  <span className="v">{fa(guests.children)}</span>
+                  <button onClick={() => setGuests(g => ({...g, children: g.children + 1}))}>+</button>
+                </div>
+              </div>
+              {dates.start && dates.end && (
+                <div style={{marginTop: 18, padding: 12, background: "var(--brand-primary-soft)", borderRadius: 8, fontSize: 13, color: "var(--brand-primary)"}}>
+                  مدت اقامت: <b>{fa(dates.end - dates.start)} شب</b> · از {fa(dates.start)} تا {fa(dates.end)} اردیبهشت
+                </div>
+              )}
+            </div>
+          </BottomSheet>
+
+          <TweaksPanel title="Tweaks">
+            <TweakSection title="چیدمان هیرو">
+              <TweakRadio label="سبک هیرو" value={tweaks.heroLayout} onChange={v => setTweak("heroLayout", v)} options={[
+                {value: "overlay", label: "Overlay (تصویر تمام)"},
+                {value: "split", label: "Split (دوستونه)"},
+              ]}/>
+            </TweakSection>
+            <TweakSection title="رنگ برند">
+              <TweakColor label="رنگ اصلی (دریا)" value={tweaks.primaryColor} onChange={v => setTweak("primaryColor", v)}/>
+              <TweakColor label="رنگ مکمل (خاک سرخ)" value={tweaks.secondaryColor} onChange={v => setTweak("secondaryColor", v)}/>
+              <TweakToggle label="حالت تاریک" value={tweaks.darkMode} onChange={v => setTweak("darkMode", v)}/>
+            </TweakSection>
+            <TweakSection title="هیرو">
+              <TweakText label="عنوان" value={tweaks.heroTitle} onChange={v => setTweak("heroTitle", v)}/>
+              <TweakText label="زیرعنوان" value={tweaks.heroSubtitle} onChange={v => setTweak("heroSubtitle", v)} multiline/>
+              <TweakSlider label="ارتفاع" value={tweaks.heroHeight} onChange={v => setTweak("heroHeight", v)} min={60} max={100} step={2} unit="vh"/>
+            </TweakSection>
+            <TweakSection title="تایپوگرافی">
+              <TweakSlider label="مقیاس فونت" value={tweaks.fontScale} onChange={v => setTweak("fontScale", v)} min={0.85} max={1.15} step={0.05}/>
+            </TweakSection>
+            <TweakSection title="Singo Crab">
+              <TweakSlider label="اندازه خرچنگ در فوتر" value={tweaks.crabSize} onChange={v => setTweak("crabSize", v)} min={0.6} max={1.6} step={0.1} unit="x"/>
+            </TweakSection>
+            <TweakSection title="Eco Markers">
+              <TweakRadio label="نمایش نشانگر eco" value={tweaks.ecoIntensity} onChange={v => setTweak("ecoIntensity", v)} options={[
+                {value: 0, label: "خاموش"},
+                {value: 1, label: "روشن"},
+              ]}/>
+            </TweakSection>
+            <TweakSection title="Dark Mode">
+              <TweakToggle label="جو شبانه (ستاره‌ها)" value={tweaks.darkAtmosphere} onChange={v => setTweak("darkAtmosphere", v)}/>
+            </TweakSection>
+          </TweaksPanel>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+  </script>
+</body>
+</html>

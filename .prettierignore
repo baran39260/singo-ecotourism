@@ -8,3 +8,5 @@ pnpm-lock.yaml
 *.min.*
 public
 messages
+# mockup‌های طراحی — کد محصول نیستند، فرمت اصلی حفظ شود
+design

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Singo Signature — ویژگی‌های امضا</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css?v=3"/>
+  <link rel="stylesheet" href="pages.css"/>
+  <link rel="stylesheet" href="signature.css?v=2"/>
+  <style>
+    .showcase-section { padding: 48px 0; border-bottom: 1px solid var(--neutral-200); }
+    .showcase-section h2 { margin-bottom: 8px; }
+    .showcase-section .demo-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; margin-top: 24px; }
+    .demo-card {
+      background: var(--surface);
+      border: 1px solid var(--neutral-200);
+      border-radius: 16px;
+      padding: 24px;
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+    .demo-label { font-size: 11px; font-weight: 600; color: var(--neutral-500); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+    .crab-pose-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .crab-pose { display: flex; flex-direction: column; align-items: center; padding: 24px; background: var(--surface); border: 1px solid var(--neutral-200); border-radius: 16px; }
+    .crab-pose-name { margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--brand-ink); }
+    .toast-trigger-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .eco-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .demo-room {
+      background: var(--surface);
+      border: 1px solid var(--neutral-200);
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 320px;
+    }
+    .demo-room-img { aspect-ratio: 4/3; background: linear-gradient(135deg, #b8d4d8, #7fb8b8); position: relative; }
+    .demo-room-img .eco-on-img { position: absolute; top: 12px; left: 12px; }
+    .demo-room-body { padding: 14px 16px; }
+    .demo-room-title { font-size: 16px; font-weight: 700; color: var(--brand-ink); }
+    .demo-room-meta { display: flex; gap: 6px; font-size: 12px; color: var(--neutral-500); margin: 4px 0 8px; }
+    .demo-room-price { font-size: 18px; font-weight: 800; color: var(--brand-primary); }
+    .onb-demo-host {
+      position: relative;
+      padding: 60px 24px 24px;
+      min-height: 280px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="icons.jsx"></script>
+  <script type="text/babel" src="crab.jsx"></script>
+  <script type="text/babel" src="signature.jsx"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+
+  <script type="text/babel">
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "darkMode": true,
+      "crabSize": 1.6,
+      "ecoIntensity": 1,
+      "darkStyle": "atmospheric"
+    }/*EDITMODE-END*/;
+
+    function App() {
+      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      React.useEffect(() => {
+        document.body.classList.toggle("dark", tweaks.darkMode);
+      }, [tweaks.darkMode]);
+
+      return (
+        <ToastProvider>
+          <ShowcaseInner tweaks={tweaks} setTweak={setTweak}/>
+        </ToastProvider>
+      );
+    }
+
+    function ShowcaseInner({ tweaks, setTweak }) {
+      const toast = useToast();
+      const crabSize = Math.round(120 * tweaks.crabSize);
+      const [showOnb, setShowOnb] = React.useState(true);
+
+      return (
+        <>
+          <header className="container" style={{ paddingTop: 32, paddingBottom: 16 }}>
+            <div className="brand" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <SingoCrab pose="wave" size={48} color="var(--brand-primary)"/>
+              <div>
+                <div style={{ fontWeight: 800, fontSize: 22, color: "var(--brand-ink)" }}>Singo Signature</div>
+                <div style={{ fontSize: 13, color: "var(--neutral-500)" }}>ویژگی‌های امضای برند — خرچنگ، Eco، Dark Mode</div>
+              </div>
+            </div>
+          </header>
+
+          <div className="container">
+
+            {/* CRAB POSES */}
+            <section className="showcase-section">
+              <span className="t-overline">Singo Crab</span>
+              <h2 className="t-display-m">سه پوز رسمی خرچنگ مسکات</h2>
+              <p className="t-body-m" style={{ color: "var(--neutral-500)", maxWidth: 600 }}>
+                خط‌نقاشی ساده، تک‌رنگ، با شخصیت دوستانه. استفاده در empty states، صفحه ۴۰۴، لودرها و توست‌ها.
+              </p>
+              <div className="crab-pose-grid" style={{ marginTop: 24 }}>
+                <div className="crab-pose">
+                  <SingoCrab pose="wave" size={crabSize} color="var(--brand-primary)"/>
+                  <span className="crab-pose-name">سلام / wave</span>
+                </div>
+                <div className="crab-pose">
+                  <SingoCrab pose="sleep" size={crabSize} color="var(--brand-primary)"/>
+                  <span className="crab-pose-name">خواب / sleep</span>
+                </div>
+                <div className="crab-pose">
+                  <SingoCrab pose="surprise" size={crabSize} color="var(--brand-primary)"/>
+                  <span className="crab-pose-name">تعجب / surprise</span>
+                </div>
+              </div>
+            </section>
+
+            {/* ECO BADGES */}
+            <section className="showcase-section">
+              <span className="t-overline">Eco Markers</span>
+              <h2 className="t-display-m">نشانگر سازگاری با محیط زیست</h2>
+              <p className="t-body-m" style={{ color: "var(--neutral-500)", maxWidth: 600 }}>
+                ترکیبی از آیکون برگ + tooltip + امتیاز A/B/C. روی hover جزئیات نشان داده می‌شود.
+              </p>
+              <div className="demo-row">
+                <div className="demo-card">
+                  <div className="demo-label">Compact (روی کارت‌ها)</div>
+                  <div className="eco-row">
+                    <EcoBadge score="A" reasons={["انرژی خورشیدی", "مصالح بومی", "بازیافت آب خاکستری"]} intensity={tweaks.ecoIntensity}/>
+                    <EcoBadge score="B" reasons={["مصرف کم آب", "کمپوست محلی"]} intensity={tweaks.ecoIntensity}/>
+                    <EcoBadge score="C" reasons={["در حال بهبود"]} intensity={tweaks.ecoIntensity}/>
+                  </div>
+                  <div style={{ marginTop: 16, fontSize: 12, color: "var(--neutral-500)" }}>
+                    Hover کنید تا جزئیات ببینید
+                  </div>
+                </div>
+                <div className="demo-card">
+                  <div className="demo-label">روی کارت اتاق</div>
+                  <div className="demo-room">
+                    <div className="demo-room-img">
+                      <div className="eco-on-img">
+                        <EcoBadge score="A" reasons={["انرژی خورشیدی", "بازیافت آب"]} intensity={tweaks.ecoIntensity}/>
+                      </div>
+                    </div>
+                    <div className="demo-room-body">
+                      <div className="demo-room-title">سوئیت بادگیر</div>
+                      <div className="demo-room-meta">۲ نفره · حمام خصوصی</div>
+                      <div className="demo-room-price">۲٬۸۰۰٬۰۰۰ <small style={{ fontSize: 11, color: "var(--neutral-500)" }}>تومان / شب</small></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="demo-card">
+                  <div className="demo-label">Full (در صفحه جزئیات)</div>
+                  <EcoBadge variant="full" score="A" reasons={["انرژی خورشیدی", "مصالح بومی", "بدون پلاستیک یک‌بارمصرف"]} intensity={tweaks.ecoIntensity}/>
+                </div>
+              </div>
+            </section>
+
+            {/* EMPTY STATES */}
+            <section className="showcase-section">
+              <span className="t-overline">Empty State</span>
+              <h2 className="t-display-m">حالت‌های خالی با خرچنگ</h2>
+              <div className="demo-row">
+                <div className="demo-card" style={{ padding: 0 }}>
+                  <EmptyState
+                    title="هنوز اتاقی رزرو نکرده‌ای"
+                    description="کاوشت رو شروع کن — قشم پر از تجربه‌های کوچک و عمیقه."
+                    crabPose="sleep"
+                    action={<a href="rooms.html" className="btn btn-primary">دیدن اتاق‌ها</a>}
+                  />
+                </div>
+                <div className="demo-card" style={{ padding: 0 }}>
+                  <EmptyState
+                    title="نتیجه‌ای پیدا نشد"
+                    description="فیلترها رو سبک‌تر کن یا تاریخ دیگه‌ای امتحان کن."
+                    crabPose="surprise"
+                    action={<button className="btn btn-secondary">حذف فیلترها</button>}
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* 404 */}
+            <section className="showcase-section">
+              <span className="t-overline">Error 404</span>
+              <h2 className="t-display-m">صفحه ۴۰۴</h2>
+              <div className="demo-card" style={{ padding: 0, marginTop: 24 }}>
+                <NotFound404 onGoHome={() => toast({ type: "info", title: "بازگشت", message: "به خانه" })}/>
+              </div>
+            </section>
+
+            {/* LOADERS */}
+            <section className="showcase-section">
+              <span className="t-overline">Loader</span>
+              <h2 className="t-display-m">لودر</h2>
+              <div className="demo-row">
+                <div className="demo-card">
+                  <CrabLoader message="در حال جستجو…"/>
+                </div>
+                <div className="demo-card">
+                  <CrabLoader message="در حال تأیید رزرو…" size={80}/>
+                </div>
+              </div>
+            </section>
+
+            {/* TOASTS */}
+            <section className="showcase-section">
+              <span className="t-overline">Toasts</span>
+              <h2 className="t-display-m">پیام‌های لحظه‌ای</h2>
+              <p className="t-body-m" style={{ color: "var(--neutral-500)" }}>
+                روی دکمه‌ها کلیک کنید تا توست‌ها با خرچنگ ظاهر شوند.
+              </p>
+              <div className="toast-trigger-row" style={{ marginTop: 16 }}>
+                <button className="btn btn-primary" onClick={() => toast({ type: "success", title: "رزرو ثبت شد!", message: "کد پیگیری: SG-7842" })}>توست موفقیت</button>
+                <button className="btn btn-secondary" onClick={() => toast({ type: "error", title: "خطا در پرداخت", message: "لطفاً دوباره تلاش کنید" })}>توست خطا</button>
+                <button className="btn btn-secondary" onClick={() => toast({ type: "info", title: "اطلاعیه", message: "اتاق در دسترس است" })}>توست اطلاع</button>
+              </div>
+            </section>
+
+            {/* ONBOARDING */}
+            <section className="showcase-section">
+              <span className="t-overline">Onboarding</span>
+              <h2 className="t-display-m">راهنمای آنبوردینگ</h2>
+              <div className="demo-card onb-demo-host" style={{ marginTop: 24 }}>
+                <button className="btn btn-secondary" onClick={() => setShowOnb(true)}>نمایش tooltip</button>
+                {showOnb && (
+                  <OnboardingTooltip
+                    title="تاریخ ورود را انتخاب کن"
+                    message="می‌تونی تاریخ شمسی رو از تقویم انتخاب کنی. خرچنگ کمکت می‌کنه!"
+                    onDismiss={() => setShowOnb(false)}
+                    position="bottom"
+                  />
+                )}
+              </div>
+            </section>
+
+            {/* DARK MODE */}
+            <section className="showcase-section" style={{ borderBottom: 0 }}>
+              <span className="t-overline">Dark Mode</span>
+              <h2 className="t-display-m">حالت تاریک — اتمسفریک</h2>
+              <p className="t-body-m" style={{ color: "var(--neutral-500)", maxWidth: 600 }}>
+                لاجوردی عمیق + هایلایت‌های گرم teal/orange + ستاره‌های ظریف پس‌زمینه — مثل شب در ساحل قشم.
+                از Tweaks حالت تیره را روشن کنید تا تجربه کنید.
+              </p>
+              <div className="demo-card" style={{ marginTop: 24, padding: 32, textAlign: "center" }}>
+                <SingoCrab pose="wave" size={80} color="var(--brand-primary)"/>
+                <h3 className="t-title-l" style={{ marginTop: 12 }}>هر چیزی که اینجاست در dark mode هم زیبا می‌شود</h3>
+                <p className="t-body-m" style={{ color: "var(--neutral-500)", marginTop: 8 }}>کارت‌ها، عکس‌ها، badge‌ها، toast‌ها — همه با مهر دارک تنظیم شده‌اند.</p>
+                <div style={{ marginTop: 16, display: "flex", gap: 12, justifyContent: "center" }}>
+                  <EcoBadge score="A" reasons={["test"]} intensity={tweaks.ecoIntensity}/>
+                  <span className="badge">Badge</span>
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+          <TweaksPanel title="Tweaks">
+            <TweakSection title="حالت">
+              <TweakToggle label="حالت تاریک" value={tweaks.darkMode} onChange={v => setTweak("darkMode", v)}/>
+            </TweakSection>
+            <TweakSection title="خرچنگ مسکات">
+              <TweakSlider label="اندازه خرچنگ" value={tweaks.crabSize} onChange={v => setTweak("crabSize", v)} min={0.6} max={1.6} step={0.1} unit="x"/>
+            </TweakSection>
+            <TweakSection title="نشانگر eco">
+              <TweakRadio label="نمایش" value={tweaks.ecoIntensity} onChange={v => setTweak("ecoIntensity", v)} options={[
+                {value: 0, label: "خاموش"},
+                {value: 1, label: "روشن"},
+              ]}/>
+            </TweakSection>
+          </TweaksPanel>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+  </script>
+</body>
+</html>
